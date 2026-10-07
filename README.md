@@ -16,6 +16,9 @@ https://plant-disease-diagnosis-fastapi.onrender.com
 
 https://plant-disease-diagnosis-fastapi.onrender.com/docs
 
+<img width="1012" height="806" alt="image" src="https://github.com/user-attachments/assets/e986e8fd-6768-4907-a290-87091da77eb4" />
+
+
 ---
 
 ## ✨ Features
