@@ -242,5 +242,5 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Trained model is kept locally and distributed outside Git.
-/models/plant_disease_model.keras
+# Model artifacts are kept locally and distributed outside Git.
+*.keras
