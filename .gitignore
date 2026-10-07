@@ -1,3 +1,26 @@
+# Virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+
+# Dataset (do not upload training data)
+data/
+
+# OS files
+.DS_Store
+Thumbs.db
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -218,3 +241,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Trained model is kept locally and distributed outside Git.
+/models/plant_disease_model.keras
