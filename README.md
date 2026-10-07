@@ -1,9 +1,58 @@
-# Plant Disease Detection API
+# 🌿 Plant Disease Detection API
 
-CNN-based plant disease diagnosis service using TensorFlow, FastAPI, Docker,
-and the PlantVillage dataset. It classifies leaf images into 38 classes.
+A deep learning-powered API for plant disease classification using TensorFlow, FastAPI, and Docker.
 
-## Project layout
+The model is trained on the PlantVillage dataset and can classify plant leaf images into 38 disease categories, returning the predicted plant, disease name, and confidence score.
+
+---
+
+## 🚀 Live Deployment
+
+### API Base URL
+
+https://plant-disease-diagnosis-fastapi.onrender.com
+
+### Interactive API Documentation
+
+https://plant-disease-diagnosis-fastapi.onrender.com/docs
+
+---
+
+## ✨ Features
+
+- Plant disease classification from leaf images
+- 38 plant disease classes
+- TensorFlow/Keras CNN model
+- FastAPI REST API
+- Dockerized deployment
+- Hosted on Render
+- Interactive Swagger documentation
+- Health check endpoint
+
+---
+
+## 🛠 Tech Stack
+
+### Machine Learning
+
+- TensorFlow 2.21
+- Keras 3.15.1
+- NumPy
+- PlantVillage Dataset
+
+### Backend
+
+- FastAPI
+- Uvicorn
+
+### Deployment
+
+- Docker
+- Render
+
+---
+
+## 📂 Project Structure
 
 ```text
 Plant_Disease_Diagnosis/
@@ -11,71 +60,76 @@ Plant_Disease_Diagnosis/
 │   ├── main.py
 │   ├── model_loader.py
 │   └── utils.py
+│
 ├── models/
 │   └── plant_disease_model.keras
+│
 ├── data/
 ├── notebooks/
 ├── requirements.txt
 └── README.md
 ```
 
-The model is resolved relative to `app/model_loader.py`, so the server can be
-started from the project root or another working directory.
+The model path is resolved relative to `app/model_loader.py`, allowing the server to run correctly regardless of the current working directory.
 
-## Run locally (Windows PowerShell)
+---
 
-Use Python 3.12 with the TensorFlow and Keras versions pinned in
-`requirements.txt`. The saved model was serialized by Keras 3.15.1, so loading
-it requires a compatible Keras version.
+## 🤖 Model Information
 
-```powershell
-cd C:\Users\VICTUS\Desktop\Plant_Disease_Diagnosis
-py -3.12 -m venv .venv312
-.\.venv312\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r requirements.txt
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+| Property | Value |
+|-----------|---------|
+| Model Type | Convolutional Neural Network (CNN) |
+| Framework | TensorFlow / Keras |
+| Dataset | PlantVillage |
+| Classes | 38 |
+| Input Size | 224 × 224 × 3 |
+| Output | Plant Disease Prediction |
+
+---
+
+## 📡 API Endpoints
+
+### Home
+
+```http
+GET /
 ```
 
-If PowerShell blocks virtual-environment activation, run the environment's
-Python directly instead:
+Example Response:
 
-```powershell
-.\.venv312\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv312\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```json
+{
+  "message": "Plant Disease Detection API is running"
+}
 ```
 
-The model loads once per Uvicorn worker during application startup. For a
-single local process, do not add `--workers`.
+---
 
-## Run with Docker
+### Health Check
 
-Build and start the API from the project root:
-
-```powershell
-docker build -t plant-disease-api .
-docker run --rm -d --name plant-disease-api -p 10000:10000 plant-disease-api
+```http
+GET /health
 ```
 
-Verify the pinned runtime and model load:
+Example Response:
 
-```powershell
-docker run --rm plant-disease-api python -c "import tensorflow as tf, keras; print('TensorFlow:', tf.__version__); print('Keras:', keras.__version__); assert tf.__version__ == '2.21.0' and keras.__version__ == '3.15.1'"
-Invoke-RestMethod http://127.0.0.1:10000/health
-docker stop plant-disease-api
+```json
+{
+  "status": "healthy"
+}
 ```
 
-## Check the API
+---
 
-In another terminal:
+### Disease Prediction
 
-```powershell
-Invoke-RestMethod http://127.0.0.1:8000/health
-curl.exe -X POST "http://127.0.0.1:8000/predict" -F "file=@C:\path\to\leaf.jpg"
+```http
+POST /predict
 ```
 
-`POST /predict` accepts one image (up to 10 MiB) and returns a cleaned plant
-and disease name with confidence as a percentage:
+Upload a plant leaf image and receive a prediction.
+
+#### Example Response
 
 ```json
 {
@@ -85,4 +139,119 @@ and disease name with confidence as a percentage:
 }
 ```
 
-Interactive API documentation is available at `http://127.0.0.1:8000/docs`.
+---
+
+## 💻 Run Locally
+
+### Clone Repository
+
+```bash
+git clone https://github.com/leosanjit10/Plant_Disease_Diagnosis.git
+cd Plant_Disease_Diagnosis
+```
+
+### Create Virtual Environment
+
+```powershell
+py -3.12 -m venv .venv312
+.\.venv312\Scripts\Activate.ps1
+```
+
+### Install Dependencies
+
+```powershell
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+### Start API
+
+```powershell
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## 🐳 Docker
+
+### Build Image
+
+```bash
+docker build -t plant-disease-api .
+```
+
+### Run Container
+
+```bash
+docker run --rm -d --name plant-disease-api -p 10000:10000 plant-disease-api
+```
+
+### Health Check
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:10000/health
+```
+
+### Stop Container
+
+```bash
+docker stop plant-disease-api
+```
+
+---
+
+## 🧪 Testing the API
+
+### Health Endpoint
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/health
+```
+
+### Prediction Endpoint
+
+```powershell
+curl.exe -X POST "http://127.0.0.1:8000/predict" ^
+-F "file=@C:\path\to\leaf.jpg"
+```
+
+Example Response:
+
+```json
+{
+  "plant": "Apple",
+  "disease": "Apple Scab",
+  "confidence": 95.6
+}
+```
+
+---
+
+## 📈 Future Improvements
+
+- Disease treatment recommendations
+- Batch image predictions
+- User authentication
+- Mobile application integration
+- Model monitoring and analytics
+- Improved model accuracy with transfer learning
+
+---
+
+## 👨‍💻 Author
+
+**Sanjit Sitaula**
+
+GitHub: https://github.com/leosanjit10
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
